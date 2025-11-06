@@ -1,6 +1,7 @@
 .inline-keyboard {
   &__trigger-wrap {
     position: relative;
+    min-width: 0;
   }
 
   &__container {
