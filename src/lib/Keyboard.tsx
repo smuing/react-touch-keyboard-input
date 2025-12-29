@@ -2,7 +2,7 @@ import { MutableRefObject, useCallback, useEffect, useMemo, useState } from "rea
 import KeyboardReact from "react-simple-keyboard";
 import * as hangul from "hangul-js";
 import { getCustomKeyboardLayout, type KeyboardType, LayoutDisplay, NumpadButtonTheme } from "./keyboardLayout";
-import "./_Keyboard.scss";
+import "./_Keyboard.css";
 
 export interface KeyboardInstance {
   setInput(input: string): void;

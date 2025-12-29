@@ -1,0 +1,11 @@
+.inline-keyboard__trigger-wrap {
+  position: relative;
+  min-width: 0;
+}
+
+.inline-keyboard__container {
+  position: fixed;
+  z-index: 5;
+  overflow: hidden;
+  border-radius: 16px;
+}

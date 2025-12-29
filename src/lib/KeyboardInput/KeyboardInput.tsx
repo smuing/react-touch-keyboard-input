@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Keyboard, KeyboardInstance } from "../Keyboard";
-import "./_KeyboardInput.scss";
 import type { KeyboardType } from "../keyboardLayout";
 import * as hangul from "hangul-js";
+import "./_KeyboardInput.css";
 
 export interface KeyboardInputProps {
   className?: string;
