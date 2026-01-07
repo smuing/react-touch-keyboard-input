@@ -145,7 +145,7 @@ export const KeyboardInput = ({
         onFocus={handleOpen}
         type={inputType}
       />
-      {isOpen && (
+      {(isOpen && enabled) && (
         <div className="inline-keyboard__container" ref={keyboardContainerRef} style={position}>
           <Keyboard
             keyboardRef={keyboardRef}
