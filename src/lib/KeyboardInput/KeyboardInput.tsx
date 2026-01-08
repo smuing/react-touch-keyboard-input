@@ -8,7 +8,7 @@ export interface KeyboardInputProps {
   className?: string;
   value: string;
   onChange: (value: string) => void;
-  onEnter?: () => void;
+  onEnter?: (value: string) => void;
   type: KeyboardType;
   initOpen?: boolean;
   enabled: boolean;
@@ -38,6 +38,7 @@ export const KeyboardInput = ({
   const triggerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const keyboardRef = useRef<KeyboardInstance | null>(null);
+  const currentValueRef = useRef<string>(value || "");
 
   const handleOpen = () => {
     if (!enabled) return;
@@ -50,17 +51,19 @@ export const KeyboardInput = ({
   };
 
   const handleClose = () => {
-    onEnter?.();
+    onEnter?.(currentValueRef.current);
     setIsOpen(false);
   };
 
   const handleOnChange = (value: string) => {
     onChange(value);
+    currentValueRef.current = value;
   };
 
   const handleOnChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     onChange(input);
+    currentValueRef.current = input;
     // 키보드 value
     if (keyboardRef.current) {
       keyboardRef.current.setInput(input);
