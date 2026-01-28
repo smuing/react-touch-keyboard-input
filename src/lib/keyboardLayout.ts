@@ -70,7 +70,7 @@ export function getCustomKeyboardLayout(type: KeyboardType, showLangBtn: boolean
 
 export const LayoutDisplay = {
   "{bksp}": "⌫",
-  "{enter}": "↵",
+  "{enter}": "{enter}",
   "{caps}": "CAPS",
   "{shift}": "⇧",
   "{shifted}": "⬆",
