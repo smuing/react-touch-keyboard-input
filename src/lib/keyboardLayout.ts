@@ -72,8 +72,8 @@ export const LayoutDisplay = {
   "{bksp}": "⌫",
   "{enter}": "{enter}",
   "{caps}": "CAPS",
-  "{shift}": "⇧",
-  "{shifted}": "⬆",
+  "{shift}": "{shift}",
+  "{shifted}": "{shifted}",
   "{space}": " ",
   "{lang}": "한 / 영",
 };
