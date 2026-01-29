@@ -15,6 +15,7 @@ export interface KeyboardInputProps {
   disableLanguageSwitch?: boolean;
   primaryColor?: string;
   specialKeyColor?: string;
+  topOffset?: number;
   inputType?: "text" | "email" | "number" | "password" | "search" | "tel";
 }
 
@@ -29,6 +30,7 @@ export const KeyboardInput = ({
   disableLanguageSwitch = false,
   primaryColor = "#3AB8B7",
   specialKeyColor = "#B0B8C1",
+  topOffset = 0,
   inputType = "text",
 }: KeyboardInputProps) => {
   const [isOpen, setIsOpen] = useState(initOpen);
@@ -81,7 +83,7 @@ export const KeyboardInput = ({
       const padding = 8;
 
       // 기본 위치: 아래
-      let top = triggerRect.bottom + padding;
+      let top = triggerRect.bottom + padding + topOffset;
       let left = triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
 
       // 화면 넘침 방지 (좌우)
