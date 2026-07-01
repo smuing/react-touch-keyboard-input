@@ -6,6 +6,13 @@ import "./_Keyboard.css";
 
 export interface KeyboardInstance {
   setInput(input: string): void;
+  getInput?: () => string;
+  getCaretPosition?: () => number | null;
+  setCaretPosition?: (
+    position: number | null,
+    endPosition?: number | null,
+  ) => void;
+  activeInputElement?: HTMLInputElement | HTMLTextAreaElement | null;
 }
 
 export interface KeyboardProps {
@@ -98,8 +105,28 @@ export const Keyboard = ({
       // 한글 자음, 모음 조합 (화면에 보이는 값만)
       const result = hangul.assemble(hangul.disassemble(input));
       onChange(result);
+
+      // 라이브러리 내부값은 자모 단위("ㅎㅏ")로 쌓이는데 화면값은 조합("하")
+      // 인덱스 공간이 어긋나 한글에서 커서 위치가 깨진다.
+      // 매 입력 후 내부값을 조합된 값으로 정규화해 내부=화면=DOM 인덱스를 항상 일치시킨다.
+      // (라이브러리의 현재 처리가 끝난 뒤 실행되도록 microtask로 지연)
+      if (result !== input && keyboardRef?.current) {
+        const kb = keyboardRef.current;
+        const caretJamo = kb.getCaretPosition?.();
+        const caretAssembled =
+          caretJamo == null
+            ? null
+            : hangul.assemble(hangul.disassemble(input.slice(0, caretJamo)))
+                .length;
+        queueMicrotask(() => {
+          kb.setInput?.(result);
+          if (caretAssembled != null) {
+            kb.setCaretPosition?.(caretAssembled, caretAssembled);
+          }
+        });
+      }
     },
-    [onChange],
+    [onChange, keyboardRef],
   );
 
   useEffect(() => {
@@ -128,6 +155,8 @@ export const Keyboard = ({
       onChange={handleOnChange}
       onKeyReleased={handleKeyReleased}
       buttonTheme={type === "numpad" ? NumpadButtonTheme : undefined}
+      // 키 탭 시 input 포커스가 풀리지 않도록(커서 유지/스크롤 추적용)
+      preventMouseDownDefault={true}
     />
   );
 };
